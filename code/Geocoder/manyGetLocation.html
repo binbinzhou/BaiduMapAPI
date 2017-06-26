@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>批量反地址解析+商圈</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:65%;}
+		#r-result{width:100%; font-size:14px;line-height:20px;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+	<div id="r-result">
+		<button id="bdBtn">批量反地址解析</button>
+		<div id="result"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script type="text/javascript">
+	// 百度地图API功能
+	// 创建Map实例
+	var map = new BMap.Map('allmap');    
+	// 初始化地图,设置中心点坐标和地图级别
+	map.centerAndZoom(new BMap.Point(116.328749,40.026922), 13);
+	//开启鼠标滚轮缩放          
+	map.enableScrollWheelZoom(true);
+	//创建反地址解析器实例
+	var myGeo = new BMap.Geocoder();
+	var index = 0;
+	var addressPoints = [
+		new BMap.Point(116.307852,40.057031),
+		new BMap.Point(116.313082,40.047674),
+		new BMap.Point(116.328749,40.026922),
+		new BMap.Point(116.347571,39.988698),
+		new BMap.Point(116.316163,39.997753),
+		new BMap.Point(116.345867,39.998333),
+		new BMap.Point(116.403472,39.999411),
+		new BMap.Point(116.307901,40.05901)
+		];
+	//添加标注以及标注上的文本标签
+	for(var i = 0; i<addressPoints.length; i++){
+		var marker = new BMap.Marker(addressPoints[i]);
+		map.addOverlay(marker);
+		marker.setLabel(new BMap.Label('我是商圈:'+(i+1),{offset:new BMap.Size(20,-10)}));
+	}
+	function bdGEO(){	
+		var point = addressPoints[index];
+		geocodeSearch(point);
+		index++;
+	}
+	function geocodeSearch(point){
+		if(index < addressPoints.length-1){
+			setTimeout(window.bdGEO,400);
+		} 
+		myGeo.getLocation(point, function(result){
+			var addComp = result.addressComponents;
+			document.getElementById('result').innerHTML += index + ',' +addressPoints[index-1].lng + ',' + addressPoints[index-1].lat + '：'  + '商圈(' + result.business + ')  结构化数据(' + addComp.province + ',' + addComp.city + ',' + addComp.district + ',' + addComp.street + ',' + addComp.streetNumber + ')<br/><br/>';
+		});
+	}
+	var bdBtn = document.getElementById('bdBtn');
+	bdBtn.onclick = function(){
+		bdGEO();
+	};
+</script>

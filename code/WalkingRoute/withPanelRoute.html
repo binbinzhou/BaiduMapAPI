@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>根据起点终点名称设置步行路线--带结果面板</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:60%;}
+		#r-result,#r-result table{width:100%;}
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		<div id="r-result"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(116.404, 39.915);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,12);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//设置步行路线
+		var opts = {
+			renderOptions:{
+				map:map,
+				panel:'r-result',
+				autoViewport:true
+			}
+		};
+		var walking = new BMap.WalkingRoute(map,opts);
+		walking.search('天坛公园','故宫');
+
+	</script>

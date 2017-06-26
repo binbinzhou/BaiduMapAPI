@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>计算打车费用</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:80%;}
+		#r-result{width:100%; font-size:14px;}
+		#r-result>*{ height: 30px;}
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		<p>计算打车费用</p>
+		<div id="r-result">
+			起点: <input id="startP" type="text" value="" />
+			终点: <input id="endP" type="text" value="" />
+			<button id="searchBtn">查询</button>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		function search(){
+			//获取输入框的值
+			var startP = document.getElementById('startP').value;
+			var endP = document.getElementById('endP').value;
+			//获取公交路线的时间、距离
+			var output = '';
+			var duration = '';
+			var searchComplete = function(results){
+				//计算出白天的打车费用的总价
+				//也可计算夜晚打车费用
+				console.log(results.taxiFare);
+				/*
+				day:
+					initialFare	14
+					totalFare		22
+					unitFare		2.4
+				*/
+				var money = results.taxiFare.day.totalFare;
+				//打车的距离
+				console.log(results.taxiFare.distance);
+				//出租车的备注信息
+				console.log(results.taxiFare.remark);
+				//也可以调用方法计算距离
+				var plan = results.getPlan(0);
+				//获取距离
+				distance = plan.getDistance(true) + '\n';
+				output = '起点：'+startP+'\n'+
+									'终点：'+endP+'\n'+
+									'总路程：'+distance+
+									'打车需要：'+money+'元';
+			};
+			var opts = {
+				renderOptions:{
+					map:map
+				},
+				onSearchComplete:searchComplete,
+				onPolylinesSet: function(){    
+					//由于加载地图需要时间，所以弹框内容需要在地图加载完成之后在显现出来，    
+					setTimeout(function(){
+						alert(output);
+					},1000);
+				}
+			};
+			var driving = new BMap.DrivingRoute(map,opts);
+			map.clearOverlays();
+			driving.search(startP,endP);
+			
+			//自定义图标
+			var myIcon = new BMap.Icon('../../img/red1.png',new BMap.Size(30,60));
+			//设置添加标注后的回调函数
+			driving.setMarkersSetCallback(function(result){
+				for(var j=0;j<result.length;j++){
+					result[j].marker.setIcon(myIcon);
+				}
+			});
+		}
+
+		//注：在终点不确定时，程序出错
+		
+		//点击事件
+		var searchBtn = document.getElementById('searchBtn');
+		searchBtn.onclick = function(){
+			search();	
+		};
+
+	</script>

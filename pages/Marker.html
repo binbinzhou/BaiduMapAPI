@@ -1,0 +1,201 @@
+<!-- 覆盖物 开始-->
+<!-- 覆盖物固定定位导航条 -->
+<div class="fixed-nav">
+	<div class="nav-a">
+		<a class="active" href="javascript:void(0);">覆盖物的类型</a>
+		<a href="javascript:void(0);">标注(点)</a>
+		<a href="javascript:void(0);">线、面</a>
+		<a href="javascript:void(0);">自定义控件</a>
+		<a href="javascript:void(0);">行政区规划</a>
+		<a href="javascript:void(0);">实例Demo</a>
+	</div>
+</div>
+<!-- 模块大标题 -->
+<h1><span class="font28">覆盖物 </span> BaiduMap API</h1>
+<div class="content">
+	<p class="con-title">地图覆盖物类型</p>
+	<div class="con-inner">
+		<p class="text-indent">所有叠加或覆盖到地图的内容，我们统称为地图覆盖物。如标注、矢量图形元素(包括：折线和多边形和圆)、信息窗口等。覆盖物拥有自己的地理坐标，当您拖动或缩放地图时，它们会相应的移动。 </p>
+		<p>地图API提供了如下几种覆盖物： </p>
+		<p>Overlay：覆盖物的抽象基类，所有的覆盖物均继承此类的方法。</p>
+		<p>Marker：标注表示地图上的点，可自定义标注的图标。</p>
+		<p>Label：表示地图上的文本标注，您可以自定义标注的文本内容。</p>
+		<p>Polyline：表示地图上的折线。</p>
+		<p>Polygon：表示地图上的多边形。多边形类似于闭合的折线，另外您也可以为其添加填充颜色。</p>
+		<p>Circle: 表示地图上的圆。</p>
+		<p>InfoWindow：信息窗口也是一种特殊的覆盖物，它可以展示更为丰富的文字和多媒体信息。注意：同一时刻只能有一个信息窗口在地图上打开。</p>
+		<p class="text-indent">可以使用map.addOverlay方法向地图添加覆盖物，使用map.removeOverlay方法移除覆盖物，注意此方法不适用于InfoWindow。</p>
+		<p></p>
+	</div>
+	<p class="con-title">标注</p>
+	<div class="con-inner">
+		<p class="text-indent">标注表示地图上的点。API提供了默认图标样式，您也可以通过Icon类来指定自定义图标。Marker的构造函数的参数为Point和MarkerOptions（可选）。注意：当您使用自定义图标时，标注的地理坐标点将位于标注所用图标的中心位置，您可通过Icon的offset属性修改标定位置。</p>
+		<div class="code">
+			<pre>
+	//创建地图实例
+	var map = new BMap.Map("allmap");
+	//创建点坐标
+	var point = new BMap.Point(121.480884,31.236521);
+	//创建标注
+	var marker = new BMap.Marker(point);
+	//将标注添加到地图上
+	map.addOverlay(marker);
+	//初始化地图，设置中心点坐标和地图级别
+	map.centerAndZoom(point,15);
+	//开启鼠标滚轮缩放
+	map.enableScrollWheelZoom(true);
+			</pre>
+		</div>
+		<p><b>定义标注图标</b></p>
+		<p class="text-indent">通过Icon类可实现自定义标注的图标，下面示例通过参数MarkerOptions的icon属性进行设置，您也可以使用marker.setIcon()方法。 </p>
+		<div class="code">
+			<pre>
+	//添加自定义图标标注
+	var myIcon = new BMap.Icon('../../img/blue1.png',new BMap.Size(40,70));
+	//创建标注
+	var marker = new BMap.Marker(point,{icon:myIcon});
+	//将标注添加到地图上
+	map.addOverlay(marker);
+			</pre>
+		</div>
+		<p><b>监听标注事件</b></p>
+		<p class="text-indent">事件方法与Map事件机制相同addEventListener("click", function(){})</p>					
+		<p><b>可托拽的标注</b></p>
+		<p class="text-indent">marker的enableDragging和disableDragging方法可用来开启和关闭标注的拖拽功能。默认情况下标注不支持拖拽，您需要调用marker.enableDragging()方法来开启拖拽功能。在标注开启拖拽功能后，您可以监听标注的dragend事件来捕获拖拽后标注的最新位置.</p>
+	</div>				
+	<p class="con-title">折线、弧线、圆、矩形</p>
+	<div class="con-inner">
+		<p><b>折线：</b>Polyline表示地图上的折线覆盖物。它包含一组点，并将这些点连接起来形成折线。</p>
+		<div class="code">
+			<pre>
+	//定义折线起点，经过的点，终点
+	var shanghaiPosition = new BMap.Point(121.480884,31.236521);
+	var suzhouPosition = new BMap.Point(120.601263,31.305658);
+	var wuxiPosition = new BMap.Point(120.293109,31.495029);
+	var points = [shanghaiPosition,suzhouPosition,wuxiPosition];
+	//设置折线样式
+	var opts = {strokeColor:'blue',strokeWeight:4,strokeOpacity:.5};
+	//折线new BMap.Polyline
+	var polyline = new BMap.Polyline(points,opts);
+	//绘制折线
+	map.addOverlay(polyline);
+			</pre>
+		</div>
+		<p><b>弧线：</b>CurveLine表示地图上的弧线覆盖物。它包含一组点，并将这些点连接起来形成弧线。</p>
+		<div class="code">
+			<pre>
+	//定义弧线起点，经过的点，终点
+	var shanghaiPosition = new BMap.Point(121.480884,31.236521);
+	var suzhouPosition = new BMap.Point(120.601263,31.305658);
+	var wuxiPosition = new BMap.Point(120.293109,31.495029);
+	var points = [shanghaiPosition,suzhouPosition,wuxiPosition];
+	//设置弧
+	var opts = {strokeColor:'blue',strokeWeight:4,strokeOpacity:.5};
+	//弧线new BMapLib.CurveLine!!!
+	var curve = new BMapLib.CurveLine(points,opts);
+	//绘制弧线
+	map.addOverlay(curve);
+			</pre>
+		</div>
+		<p><b>圆、矩形：</b></p>
+		<div class="code">
+			<pre>
+	//添加圆形
+	var circle = new BMap.Circle(point,1000);
+	//添加矩形
+	var polygon = new BMap.Polygon(pointArray,optss);
+				</pre>
+			</div>
+		</div>
+		<p class="con-title">自定义覆盖物</p>
+		<div class="con-inner">
+			<p>要创建自定义覆盖物</p>
+			<p>1.定义一个自定义覆盖物的构造函数，通过构造函数参数可以传递一些自由的变量。</p>
+			<p>2.设置自定义覆盖物对象的prototype属性为Overlay的实例，以便继承覆盖物基类。</p>
+			<p>3.实现initialize方法，当调用map.addOverlay方法时，API会调用此方法。</p>
+			<p>4.实现draw方法。</p>
+		</div>
+		<p class="con-title">行政区规划</p>
+		<div class="con-inner">
+			<p>创建行政区规划区域</p>
+			<div class="code">
+				<pre>
+	//获取行政区
+	function getBoundary(place){
+		var bdary = new BMap.Boundary();
+		bdary.get(place,function(rs){
+			//清除地图覆盖物
+			map.clearOverlays();
+			//行政区的点有多少个
+			var count = rs.boundaries.length;
+			if(count === 0){
+				alert('未能获取当前输入行政区域');
+				return ;
+			}
+			var pointArray = [];
+			for(var i=0;i<<span>count</span>;i++){
+				//建立多边形覆盖物
+				var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"});
+				//添加覆盖物
+				map.addOverlay(ply);
+				pointArray = pointArray.concat(ply.getPath());
+			}
+			//调整视野
+			map.setViewport(pointArray);
+		});
+	}
+	//2秒之后移动到行政区
+	setTimeout(function(){
+		getBoundary('上海市徐汇区');
+	}, 2000);
+			</pre>
+		</div>
+	</div>	
+	<!-- 覆盖物实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/Marker/commonMarker.html" target="_blank">简单覆盖物</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/ownMarker.html" target="_blank">自定义覆盖物Icon</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/animationMarker.html" target="_blank">带有动画的标注</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/dragMarker.html" target="_blank">可拖拽的标注</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/manyMarkers.html" target="_blank">添加多个标注</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/manyTypesMarker.html" target="_blank">添加多种种类的标注</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addOrderlyMarker.html" target="_blank">添加有顺序的标注</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addBoundary.html" target="_blank">添加行政区规划</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addCircle.html" target="_blank">添加可编辑的圆形区域</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addCurveLine.html" target="_blank">添加弧线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addPolygon.html" target="_blank">添加椭圆</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addPolyline.html" target="_blank">添加折线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/addRectangle.html" target="_blank">添加矩形</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Marker/manyLabels.html" target="_blank">添加多个文本标签</a>
+		</p>
+	</div>
+</div>
+<!-- 覆盖物 结束-->

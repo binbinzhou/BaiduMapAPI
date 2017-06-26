@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加有顺序的覆盖物</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width: 100%;height: 100%;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+	//定义存放点的数组
+	var data = [
+		//人民广场
+		[121.480524,31.238929],
+		//静安寺
+		[121.45645,31.229234],
+		//大世界
+		[121.487639,31.232939],
+		//外滩中心
+		[121.49691,31.238188],
+		//新天地
+		[121.484333,31.222162]
+		];
+	function showMaps(data){
+		map = new BMap.Map("allmap");
+		point = new BMap.Point(121.480884,31.236521);
+		var marker = new BMap.Marker(point);
+		map.centerAndZoom(point, 15);
+		map.enableScrollWheelZoom(true);
+		var arr =[];
+		for(var i=0;i<data.length;i++){
+			arr[i] = new BMap.Point(data[i][0],data[i][1]);
+			var myIcon = new BMap.Icon('../../img/b'+(i+1)+'.png', new BMap.Size(27,70));
+			var marker = new BMap.Marker(arr[i],{icon:myIcon}); 
+			map.addOverlay(marker);
+		}
+	}
+	showMaps(data);
+		
+	</script>

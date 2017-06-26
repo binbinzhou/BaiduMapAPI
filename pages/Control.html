@@ -1,0 +1,128 @@
+<!-- 控件 开始-->
+<!-- 控件固定定位导航条 -->
+<div class="fixed-nav">
+	<div class="nav-a">
+		<a class="active" href="javascript:void(0);">控件的类型</a>
+		<a href="javascript:void(0);">添加控件</a>
+		<a href="javascript:void(0);">控件位置</a>
+		<a href="javascript:void(0);">修改控件配置</a>
+		<a href="javascript:void(0);">自定义控件</a>
+		<a href="javascript:void(0);">实例Demo</a>
+	</div>
+</div>
+<!-- 模块大标题 -->
+<h1><span class="font28">控件 </span> BaiduMap API</h1>
+<div class="content">
+	<!-- 控件类型 -->
+	<p class="con-title">控件的类型</p>
+	<div class="con-inner">
+		<p>地图API中提供的控件有：</p>
+		<p>Control：<b>控件的抽象基类</b>，所有控件均继承此类的方法、属性。通过此类您可实现自定义控件。
+		</p>
+		<p>NavigationControl：<b>地图平移缩放控件</b>，PC端默认位于地图左上方，它包含控制地图的平移和缩放的功能。移动端提供缩放控件，默认位于地图右下方。</p>
+		<p>OverviewMapControl：<b>缩略地图控件</b>，默认位于地图右下方，是一个可折叠的缩略地图。
+		</p>
+		<p>ScaleControl：<b>比例尺控件</b>，默认位于地图左下方，显示地图的比例关系。</p>
+		<p>MapTypeControl：<b>地图类型控件</b>，默认位于地图右上方。</p>
+		<p>CopyrightControl：<b>版权控件</b>，默认位于地图左下方，默认显示，可通过审查元素方式找到版权信息以及logo所在的类设置display:none属性即可隐藏。
+		</p>
+		<p>GeolocationControl：<b>定位控件</b>，针对移动端开发，默认位于地图左下方。</p>
+	</div>
+	<!-- 添加控件 -->
+	<p class="con-title">添加控件</p>
+	<div class="con-inner">
+		<p>在实例化地图之后，使用Map.addControl()方法向地图添加控件</p>
+		<div class="code">
+			<p>//添加平移缩放控件</p>
+			<p>map.addControl(new BMap.NavigationControl());</p>
+			<p>//添加比例尺控件</p>
+			<p>map.addControl(new BMap.ScaleControl());</p>
+			<p>//添加缩略图控件</p>
+			<p>map.addControl(new BMap.OverviewMapControl());</p>
+			<p>//添加地图类型控件</p>
+			<p>map.addControl(new BMap.MapTypeControl());</p>
+			<p>//仅当设置城市信息时，MapTypeControl的切换功能才能可用</p>
+			<p>map.setCurrentCity("北京"); </p>
+		</div>
+	</div>
+	<!-- 控件位置 -->
+	<p class="con-title">控件位置</p>
+	<div class="con-inner">
+		<p class="text-indent">初始化控件时，可提供一个可选参数，其中的anchor和offset属性共同控制控件在地图上的位置。控件停靠位置 anchor表示控件的停靠位置，即控件停靠在地图的哪个角。当地图尺寸发生变化时，控件会根据停靠位置的不同来调整自己的位置。anchor允许的值为：</p>
+		<p>BMAP_ANCHOR_TOP_LEFT 表示控件定位于地图的左上角。</p>
+		<p>BMAP_ANCHOR_TOP_RIGHT 表示控件定位于地图的右上角。</p>
+		<p>BMAP_ANCHOR_BOTTOM_LEFT 表示控件定位于地图的左下角。</p>
+		<p>BMAP_ANCHOR_BOTTOM_RIGHT 表示控件定位于地图的右下角</p>
+		<p>
+			<img src="img/Con1.png" alt="">
+		</p>
+		<p><b>控件位置偏移:</b></p>
+		<p class="text-indent">除了指定停靠位置外，还可以通过偏移量来指示控件距离地图边界有多少像素。如果两个控件的停靠位置相同，那么控件可能会重叠在一起，这时就可以通过偏移值使二者分开显示。本示例将比例尺放置在地图的左下角，由于API默认会有版权信息，因此需要添加一些偏移值以防止控件重叠。 </p>
+		<div class="code">
+			<p>var opts = {offset: new BMap.Size(150, 5)}</p>    
+			<p>map.addControl(new BMap.ScaleControl(opts));</p>
+		</div>
+	</div>
+	<!-- 修改控件的配置-->
+	<p class="con-title">修改控件的配置</p>
+	<div class="con-inner">
+		<p>地图API的控件提供了丰富的配置参数，您可参考API文档来修改它们以便得到符合要求的控件外观。例如，NavigationControl控件就提供了如下类型： </p>
+		<p>BMAP_NAVIGATION_CONTROL_LARGE 表示显示完整的平移缩放控件。 </p>
+		<p>BMAP_NAVIGATION_CONTROL_SMALL 表示显示小型的平移缩放控件。</p>
+		<p>BMAP_NAVIGATION_CONTROL_PAN 表示只显示控件的平移部分功能。</p>
+		<p>BMAP_NAVIGATION_CONTROL_ZOOM 表示只显示控件的缩放部分功能。</p>
+		<p>
+			<img src="img/control.png" alt="">
+		</p>
+		<p>上图前4个为PC端平移缩放控件样式，最后一个为移动端缩放控件样式。</p>
+		<p>下面的示例将调整平移缩放地图控件的外观。 </p>
+		<div class="code">
+			<p>var opts = {type: BMAP_NAVIGATION_CONTROL_SMALL};</p>    
+			<p>map.addControl(new BMap.NavigationControl(opts));</p>
+		</div>
+	</div>
+	<!-- 自定义控件-->
+	<p class="con-title">自定义控件</p>
+	<div class="con-inner">
+		<p>创建可用的自定义控件：</p>
+		<p>1.定义一个自定义控件的构造函数。</p>
+		<p>2.设置自定义控件构造函数的prototype属性为Control的实例，以便继承控件基类。</p>
+		<p>3.实现initialize()方法并提供defaultAnchor和defaultOffset属性。</p>
+		<p><b>定义构造函数并继承Control</b></p>
+		<p class="text-indent">
+			首先您需要定义自定义控件的构造函数，并在构造函数中提供defaultAnchor和defaultOffset两个属性，以便API正确定位控件位置，接着让其继承于Control。在下面的示例中我们定义一个名为ZoomControl的控件，每一次点击将地图放大两个级别。它具有文本标识，而不是平移缩放控件中使用的图形图标。 
+		</p>
+		<p><b>初始化自定义控件</b></p>
+		<p class="text-indent">
+			当调用map.addControl()方法添加自定义控件时，API会调用该对象的initialize()方法用来初始化控件，您需要实现此方法并在其中创建控件所需的DOM元素，并添加DOM事件。所有自定义控件中的DOM元素最终都应该添加到地图容器（即地图所在的DOM元素）中去，地图容器可以通过map.getContainer()方法获得。最后initialize()方法需要返回控件容器的DOM元素。 
+		</p>
+		<p><b>添加自定义控件</b></p>
+		<p class="text-indent">
+			添加自定义控件与添加其他控件方法一致，调用map.addControl()方法即可。 
+		</p>
+		<p>详细信息见demo</p>
+	</div>
+	<!-- 控件实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/Control/commonControl.html" target="_blank">基本控件实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Control/geolocationControl.html" target="_blank">定位控件实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Control/addCopyRightControl.html" target="_blank">添加第三方版权控件实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Control/addOwnControl.html" target="_blank">添加自定义控件</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Control/addOverviewMapControl.html" target="_blank">添加缩略图默认打开控件</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Control/addCityListControl.html" target="_blank">添加城市列表控件</a>
+		</p>
+	</div>
+</div>
+<!-- 控件 结束-->

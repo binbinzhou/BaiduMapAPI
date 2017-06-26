@@ -1,0 +1,77 @@
+<!-- 检索 开始 -->
+<!-- 模块大标题 -->
+<h1><span class="font28">检索 </span> BaiduMap API</h1>
+<div class="content">
+	<p class="con-title">检索功能</p>
+	<div class="con-inner">
+		<p>在指定区域内检索，例如圆形、矩形、多边形...，</p>
+		<p>例如：在地图绘制圆形覆盖物：</p>
+		<div class="code">
+			<pre>
+	//绘制圆形
+	var opts = {
+		fillColor:"blue",
+		strokeWeight: 1,
+		fillOpacity: 0.3,
+		strokeOpacity: 0.3
+	};
+	var circle = new BMap.Circle(point,1500,opts);
+	map.addOverlay(circle);
+						</pre>
+					</div>
+					<p>创建本地检索对象，在指定范围内进行检索</p>
+					<div class="code">
+						<pre>
+	//搜索公园关键字
+	var optss = {
+		renderOptions:{
+			map:map,
+			autoViewport:false
+		}
+	};
+	var local = new BMap.LocalSearch(map,optss);
+	local.searchNearby('公园',point,1500);
+						</pre>
+					</div>
+					<p>关键字检索</p>
+					<div class="code">
+						<pre>
+	var local = new BMap.LocalSearch(map,opts);
+	local.search('公园');
+						</pre>
+					</div>
+					<p>多关键字检索</p>
+					<div class="code">
+						<pre>
+	var local = new BMap.LocalSearch(map,opts);
+	local.searchInBounds(['酒店','公园'], map.getBounds());
+						</pre>
+					</div>
+					<p>输入框搜索，相当于将输入的值传递进单个关键字搜索的方法中，</p>
+					<div class="code">
+						<pre>
+	local.search(input.value);
+			</pre>
+		</div>
+	</div>
+	<!-- 检索实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/Search/CircleAreaSearch.html" target="_blank">圆形区域内搜索</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Search/rectangleAreaSearch.html" target="_blank">矩形区域内搜索</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Search/inputKeyWordsSearch.html" target="_blank">输入框输入搜索</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Search/localKeyWordSearch.html" target="_blank">关键字搜索</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Search/localKeyWordsSearch.html" target="_blank">多个关键字搜索</a>
+		</p>
+	</div>
+</div>
+<!-- 检索 结束 -->

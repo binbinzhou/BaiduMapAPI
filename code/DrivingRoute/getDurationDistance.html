@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>获取驾车路线的时间、距离</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:80%;}
+		#r-result{width:100%; font-size:14px;}
+		#r-result>*{ height: 30px;}
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		<p>获取驾车路线的时间、距离</p>
+		<div id="r-result">
+			起点: <input id="startP" type="text" value="" />
+			终点: <input id="endP" type="text" value="" />
+			<button id="searchBtn">查询</button>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		function search(){
+			//获取输入框的值
+			var startP = document.getElementById('startP').value;
+			var endP = document.getElementById('endP').value;
+			var searchBtn = document.getElementById('searchBtn');
+			//获取驾车路线的时间、距离
+			var output = '';
+			output = '从'+startP+'到'+endP+'驾车需要：';
+			var searchComplete = function(results){
+				if(transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+				output += plan.getDuration(true) + '\n';  //获取时间
+				output += '总路程为：';
+				output += plan.getDistance(true) + '\n';  //获取距离
+			};
+			var opts = {
+				renderOptions:{
+					map:map
+				},
+				onSearchComplete:searchComplete,
+				onPolylinesSet: function(){    
+					//由于加载地图需要时间，所以弹框内容需要在地图加载完成之后在显现出来，    
+					setTimeout(function(){alert(output);},1000);
+				}
+			};
+			var driving = new BMap.DrivingRoute(map,opts);
+			map.clearOverlays();
+			driving.search(startP,endP);
+		}
+		
+		//点击事件
+		searchBtn.onclick = function(){
+			search();	
+		};
+
+	</script>

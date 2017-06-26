@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>设置地图最大最小级别</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:600px;height:400px; border:1px solid #000;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script type="text/javascript">
+	// 百度地图API功能
+	// 创建Map实例，设置地图允许的最小/大级别
+	var map = new BMap.Map("allmap",{minZoom:4,maxZoom:12});    
+	// 初始化地图,设置中心点坐标和地图级别
+	map.centerAndZoom(new BMap.Point(121.480884,31.236521), 12);
+	//开启鼠标滚轮缩放          
+	map.enableScrollWheelZoom(true);     
+</script>

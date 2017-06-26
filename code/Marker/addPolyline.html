@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加折线</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:100%; border:1px solid #000;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+		//苏州市120.601263,31.305658
+		//无锡市120.293109,31.495029
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,10);
+		//开启鼠标滚轮缩放
+		//map.enableScrollWheelZoom(true);
+
+		//定义折线起点，经过的点，终点
+		var shanghaiPosition = new BMap.Point(121.480884,31.236521);
+		var suzhouPosition = new BMap.Point(120.601263,31.305658);
+		var wuxiPosition = new BMap.Point(120.293109,31.495029);
+		var points = [shanghaiPosition,suzhouPosition,wuxiPosition];
+
+		//设置折线样式
+		var opts = {strokeColor:'blue',strokeWeight:4,strokeOpacity:.5};
+		//折线new BMap.Polyline
+		var polyline = new BMap.Polyline(points,opts);
+		//绘制折线
+		map.addOverlay(polyline);
+		//开启折线可编辑功能
+		polyline.enableEditing();
+
+
+		
+	</script>

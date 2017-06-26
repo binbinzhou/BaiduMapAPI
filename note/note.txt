@@ -1,0 +1,323 @@
+基本地图：
+	创建地图对象	参数：绘制地图的容器id、[opts]
+		var map = new BMap.Map("allmap");
+		注：可传递opts对象改变地图默认配置，
+			例如：默认显示卫星混合模式
+							地图类型参数：
+								BMAP_NORMAL_MAP 	此地图类型展示普通街道视图。
+								BMAP_PERSPECTIVE_MAP 	此地图类型展示透视图像视图。
+								BMAP_SATELLITE_MAP 	此地图类型展示卫星视图。(自 1.2 新增)
+								BMAP_HYBRID_MAP 	此地图类型展示卫星和路网的混合视图。(自 1.2 新增)
+			关闭地图默认POI事件{enableMapClick:false}
+	创建坐标点 	参数：经度、纬度
+		new BMap.Point(121.480884,31.236521);
+
+	地图方法	
+		绘制地图 		参数：绘制地图的中心点、地图级别
+			map.centerAndZoom(point, 15);
+				注：也可直接使用城市名绘制地图，map.centerAndZoom("上海",15);
+		设置级别方法	参数：地图级别(1-15)
+			map.setZoom()
+		获取经纬度，无参数
+			map.getPosition()
+		获取两点之间的距离方法	参数：起点经纬度，终点经纬度
+			map.getDistance(pointA,pointB)
+		移动地图方法	参数：终点经纬度
+			map.panTo(pointB)	
+		设置地图显示范围方法	参数：起点经纬度，终点经纬度
+			map.Bounds(pointA,pointB)
+		获取可视区域	无参数
+			map.getBounds();
+		设置地图是否支持鼠标滚轮缩放	参数：true
+			map.enableScrollWheelZoom(true)
+		设置地图是否支持拖拽	无参
+			map.enableDragging();
+			map.enableInertialDragging();
+		开启关系拖拽
+			map.enableInertialDragging();
+		禁用连续缩放效果
+			map.enableContinuousZoom();
+
+
+控件类：
+	创建控件：
+		创建地图类型控件方法
+			new BMap.MapTypeControl();
+				注：当使用地图类型控件的时候则必须调用此方法：map.setCurrentCity("上海");
+		创建平移缩放控件方法
+			new BMap.NavigationControl();
+		创建比例尺控件方法
+			new BMap.ScaleControl();
+		创建缩略图控件
+			new BMap.OverviewMapControl();
+		创建默认版权控件
+			new BMap.CopyrightControl();
+		创建城市控件
+			new BMap.CityListControl();
+		创建定位控件
+			new BMap.GeolocationControl();
+				注：创建控件时可传递参数(参数类型：对象)，来改变控件的默认配置属性。
+
+	添加控件：
+		添加控件
+			map.addControl(创建出来的控件返回值); 
+		移除控件
+			map.removeControl(创建出来的控件返回值);
+		添加第三方版权控件	参数：id,content,bounds
+			addCopyright(id,content,bounds);
+	
+
+覆盖物：
+	创建覆盖物
+		标注(点)	参数为点的经纬度坐标
+			new BMap.Marker(point);
+		圆	参数：圆心point、圆半径
+			new BMap.Circle(point,1000);
+		弧线	
+			参数：
+			var shanghaiPosition = new BMap.Point(121.480884,31.236521);
+			...
+			points = [shanghaiPosition,suzhouPosition,wuxiPosition];
+			opts为一个对象，设置弧线的样式
+			new BMapLib.CurveLine(points,opts);
+		折线
+			参数：
+			var shanghaiPosition = new BMap.Point(121.480884,31.236521);
+			...
+			var points = [shanghaiPosition,suzhouPosition,wuxiPosition];
+			opts为一个对象，设置折线的样式
+			new BMap.Polyline(points,opts);
+		矩形
+			参数：
+			//创建起点终点
+			var pStart = new BMap.Point(116.274625,39.961627);
+			var pEnd = new BMap.Point(116.367474,39.988609);
+			//存放四个点经纬度的数组
+			var pointArray = [
+				new BMap.Point(pStart.lng,pStart.lat),
+				new BMap.Point(pEnd.lng,pStart.lat),
+				new BMap.Point(pEnd.lng,pEnd.lat),
+				new BMap.Point(pStart.lng,pEnd.lat)
+			];
+			opts为一个对象，设置矩形区域的样式
+			var optss = {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5};
+			new BMap.Polygon(pointArray,optss);
+
+		创建自定义标注
+			参数：url标注图标的路径、标注的大小
+			new BMap.Icon('../../img/blue1.png',new BMap.Size(40,70));
+			//创建标注的时候传递参数更改默认图标
+			var marker = new BMap.Marker(point,{icon:myIcon});
+
+		椭圆区域	
+			参数：
+			ovalPoint：
+			opts为一个对象，设置区域的样式
+			new BMap.Polygon(ovalPoint,opts);
+		行政区规划
+			new BMap.Boundary();
+
+	覆盖物方法：
+		在地图上添加覆盖物	参数：标注对象(简单标注，圆，面，折线)
+			map.addOverlay(marker);
+		移除覆盖物，注意此方法不适用于InfoWindow。 
+			map.removeOverlay()
+		清除所有覆盖物	无参数
+			map.clearOverlays(); 
+		设置覆盖物可编辑 	无参
+			map.enableEditing()
+		给标注设置简单动画	参数：BMAP_ANIMATION_BOUNCE
+			marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		设置点是否可拖拽	无参数
+			marker.enableDragging()
+			marker.disableDragging();
+		设置覆盖物的显示与隐藏	无参数
+			marker.show(); 
+			marker.hide();
+		给标注添加点击事件
+			marker.addEventListener('click',function(){});
+		点击标注获取经纬度，无参数
+			marker.getPosition()
+
+
+信息窗口：
+	创建信息窗口
+		参数：content为信息窗口中简单的文字内容、opts对象是设置信息窗口的样式
+		new BMap.InfoWindow(content,opts);
+		注：参数也可直接为一个变量，变量中直接嵌入html代码片段，设置信息窗口中的内容以及样式。
+	打开信息窗口方法			参数：infoWindow对象，打开的坐标经纬度
+		openInfoWindow(infoWindow,point);
+
+
+检索：
+	创建本地检索					参数：地图对象，opts对象检索的一些设置，面板
+			var optss = {
+				renderOptions:{
+					map:map,
+					autoViewport:false
+				}
+			};
+		new BMap.LocalSearch(map,opts);
+
+	本地搜索
+		根据关键字本地搜索
+			local.search('公园');
+		多关键字本地搜索
+			var myKeys = ['酒店','公园'];
+			var opts = {
+				renderOptions:{
+					map: map,
+					//显示本地搜索的结果面板(前提是html页面上要调价id为'r-result'的div，样式也需要设置)
+					panel:'r-result'
+				},
+				//设置页数
+				pageCapacity:5
+			};
+			var local = new BMap.LocalSearch(map,opts);
+			local.searchInBounds(myKeys, map.getBounds());
+		圆形区域内搜索
+			searchNearby('公园',point,1500);
+		矩形区域内搜索
+			//设定搜索范围
+			var bs = new BMap.Bounds(pStart,pEnd);
+			local.searchInBounds('银行',bs);
+		改变搜索结果标注图标(适用于公交、步行、驾车)
+			//创建自定义图标
+			var myIcon = new BMap.Icon('../../img/mark.png',new BMap.Size(30,60));
+			//调用方法设置图标
+			local.setMarkersSetCallback(function(result){
+				console.log(result);
+				for(var i = 0;i<result.length;i++){
+					result[i].marker.setIcon(myIcon);
+				}
+			});
+
+
+步行路线规划
+	创建步行路线对象			参数：map对象、opts对象步行路线结果的一些设置，面板
+		new BMap.WalkingRoute(map,opts);
+		注：opts对象中也可设置搜索结果显示在面板上
+	步行路线方法					参数：起点、终点
+		search('天坛公园','故宫');
+
+
+公交路线规划
+	创建公交路线对象 			参数：map对象、opts对象公交路线结果的一些设置，面板
+		new BMap.TransitRoute(map,opts);
+	创建搜索公交号对象		参数：map对象、opts对象公交路线结果的一些设置，面板
+		var busline = new BMap.BusLineSearch(map,opts);
+		调用方法
+		busline.getBusList(busName);
+	公交路线方法					参数：起点名称、终点名称/起点坐标、终点坐标
+		search('中山公园','大世界');
+		//search(pointA,pointB);
+
+
+驾车路线规划
+	创建驾车路线对象			参数：map对象、opts对象驾车路线结果的一些设置，面板
+		new BMap.DrivingRoute(map,opts);
+		注：opts中也可设置面板是否显示
+	驾车路线方法					参数：起点名称、终点名称/起点坐标、终点坐标
+		search(pointA,pointB);
+	设置途径地点					调用方法时传递对象参数即可
+		driving.search(pointA, pointB,{waypoints:['中华民族园','对外经贸大学']});
+
+
+定位
+	根据浏览器定位对象				无参数
+		var geolocation = new BMap.Geolocation();
+		调用定位方法
+		geolocation.getCurrentPosition(function(r){...},{enableHighAccuracy: true});
+
+	根据城市名定位
+		map.centerAndZoom(city,12);
+
+	根据IP定位
+		var myCity = new BMap.LocalCity();
+		调用方法定位
+		myCity.get(function(result){
+			var cityName = result.name;
+			map.centerAndZoom(cityName,12);
+			alert('当前定位城市：'+cityName);
+		});
+
+	根据经纬度定位
+		//获取经纬度
+		var longitude = document.getElementById('longitude').value;
+		var latiude = document.getElementById('latiude').value;
+		//创建坐标点
+		var points = new BMap.Point(longitude,latiude);
+		var marker = new BMap.Marker(points);
+		map.addOverlay(marker);
+		//将地图移动到指定坐标点
+		map.panTo(points);
+
+
+地址解析/逆地址解析
+	创建地址解析器实例							无参数
+		var myGeo = new BMap.Geocoder();
+		调用方法将地址解析显示在地图上并调整视野
+		myGeo.getPoint('中山公园',function(point){
+			if(point){
+				map.centerAndZoom(point,15);
+				map.addOverlay(new BMap.Marker(point));
+			} else{
+				alert('您选择地址没有解析到结果');
+			}
+		},'上海市');
+
+	创建反地址解析器实例						无参数
+		var myGeo = new BMap.Geocoder();
+		//将地址解析显示在地图上并调整视野
+		map.addEventListener('click',function(event){
+			var point = event.point;
+			//调用方法获取地址信息
+			myGeo.getLocation(point,function(result){
+				var addComp = result.addressComponents;
+				alert(addComp.province + ', ' + addComp.city + ', '+ addComp.district + ', ' + addComp.street + ', ' + addComp.streetNumber);
+			});
+		});
+
+
+右键菜单
+	创建右键菜单对象				无参数
+		var menu = new BMap.ContextMenu();
+	创建右键菜单中的子项		参数：子项的文字、回调函数、？
+		var item = new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100);
+		//将子项添加进右键菜单中
+		menu.addItem(item);
+	//将右键菜单添加进地图或者覆盖物中
+	map.addContextMenu(menu);
+
+鼠标
+	创建测距对象		参数：map对象
+		var myDis = new BMapLib.DistanceTool(map);
+
+	调用方法
+		打开测距
+		myDis.open();
+		关闭测距
+		myDis.close();
+
+
+事件：
+	//绑定事件
+	addEventListener('click',function(){});
+	//移除事件
+	map.removeEventListener("click",function(){});
+
+
+公交、驾车、步行
+	设置添加标注后的回调函数
+		setMarkersSetCallback(function(reslut){
+			//自定义图标
+			var myIcon = new BMap.Icon('../../img/red1.png',new BMap.Size(30,60));
+			//设置添加标注后的回调函数
+			driving.setMarkersSetCallback(function(result){
+				for(var j=0;j<result.length;j++){
+					result[j].marker.setIcon(myIcon);
+				}
+			});
+		})
+
+			

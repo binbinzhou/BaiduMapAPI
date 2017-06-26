@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>鼠标绘制点线面</title>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width: 100%;height: 90%;}
+		button{ padding: 5px; }
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+	<div id="result">
+		<button class="getMarkers">获取绘制的覆盖物个数</button>
+		<button class="clearAll">清除所有覆盖物</button>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src='../../js/jquery-1.10.2.min.js'></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+	<script type="text/javascript">
+		//百度地图API功能
+    var map = new BMap.Map('allmap');
+    var point = new BMap.Point(121.480884,31.236521);
+    map.centerAndZoom(point, 15);
+    //map.enableScrollWheelZoom();  
+    var overlays = [];
+		var overlaycomplete = function(e,overlay){
+      overlays.push(e.overlay);
+
+      //当前的绘制模式 
+      console.log(e.drawingMode);
+
+      //对应的绘制模式返回对应的覆盖物 
+	    console.log(e.overlay);
+
+	    // 需要开启计算模式才会返回这个值，当绘制线的时候返回距离、绘制多边形、圆、矩形时候返回面积，单位为米，
+	    console.log('计算结果',e.calculate);
+
+	    //计算面积时候出现在Map上的Label对象
+	    console.log(e.label);
+    };
+
+    //设置统一样式
+    var styleOptions = {
+      strokeColor:"red",    //边线颜色。
+      fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+      strokeWeight: 3,       //边线的宽度，以像素为单位。
+      strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+      fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
+      strokeStyle: 'solid' //边线的样式，solid或dashed。
+    };
+
+    //设置自定义图标
+    var myIcon = new BMap.Icon('../../img/blue1.png',new BMap.Size(40,70));
+    var markerOptions = {
+    	icon:myIcon
+    };
+
+    //实例化鼠标绘制工具
+    var drawingManager = new BMapLib.DrawingManager(map, {
+      //是否默认开启绘制模式
+      isOpen: false,
+      //是否显示工具栏
+      enableDrawingTool: true, 
+      //绘制是否进行测距(画线时候)、测面(画圆、多边形、矩形)
+      enableCalculate:true,
+      drawingToolOptions: {
+      	//位置
+        anchor: BMAP_ANCHOR_TOP_RIGHT, 
+        //偏离值
+        offset: new BMap.Size(5,5),
+        //工具栏的缩放比例,默认为1
+        scale: 0.8
+      },
+      //标注的样式
+      markerOptions: markerOptions,
+      //圆的样式
+      circleOptions: styleOptions,
+      //线的样式
+      polylineOptions: styleOptions,
+      //多边形的样式
+      polygonOptions: styleOptions,
+      //矩形的样式
+      rectangleOptions: styleOptions
+    });
+
+	 	//添加鼠标绘制工具监听事件，用于获取绘制结果
+    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+
+    //清除地图上的所有覆盖物
+    function clearAll() {
+    	/*
+			for(var i = 0; i < overlays.length; i++){
+	      map.removeOverlay(overlays[i]);
+      }
+			*/
+      //清除地图上所有覆盖物，map.removeOverlay不能清除文本标签！！
+      map.clearOverlays();
+      overlays.length = 0;
+    }
+
+    //点击事件
+    $('.getMarkers').on('click',function(){
+    	alert(overlays.length);
+    });
+
+    $('.clearAll').on('click',function(){
+    	clearAll();
+    });
+
+
+</script>

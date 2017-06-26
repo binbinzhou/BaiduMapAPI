@@ -1,0 +1,153 @@
+<!-- Baidu基本地图 开始-->
+<!-- 基本地图固定定位导航条 -->
+<div class="fixed-nav">
+	<div class="nav-a">
+		<a class="active" href="javascript:void(0);">绘制地图</a>
+		<a href="javascript:void(0);">步骤详解</a>
+		<a href="javascript:void(0);">配置与操作</a>
+		<a href="javascript:void(0);">异步加载地图</a>
+		<a href="javascript:void(0);">实例Demo</a>
+	</div>
+</div>
+<!-- 模块大标题 -->
+<h1><span class="font28">绘制 </span> BaiduMap API</h1>
+<div class="content">
+	<p class="con-title">百度地图的简单绘制</p>
+	<div class="con-inner">
+		<p>开始学习百度地图API最简单的方式是看一个简单的示例。以下代码创建了一个地图并以上海市作为地图的中心： </p>
+		<div class="code">
+			<p><span>&lt;</span>!DOCTYPE html<span>&gt;</span></p>  
+			<p><span>&lt;</span>html<span>&gt;</span></p>
+			<p><span>&lt;</span>head<span>&gt;</span></p>
+			<p><span>&lt;</span>meta name="viewport" content="initial-scale=1.0, user-scalable=no" /<span>&gt;</span></p>
+			<p><span>&lt;</span>meta http-equiv="Content-Type" content="text/html; charset=utf-8" /<span>&gt;</span></p>
+			<p><span>&lt;</span>title<span>&gt;</span>Hello, World<span>&lt;</span>/title<span>&gt;</span></p>
+			<p><span>&lt;</span>style type="text/css"<span>&gt;</span></p> 
+			<p>html{height:100%}</p>
+			<p>body{height:100%;margin:0px;padding:0px}</p>
+			<p>#container{height:100%}</p>
+			<p><span>&lt;</span>/style<span>&gt;</span></p>
+			<p><span>&lt;</span>script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"<span>&gt;</span></p>
+			<p><span>&lt;</span>/script<span>&gt;</span></p>
+			<p><span>&lt;</span>/head<span>&gt;</span></p>
+			<p><span>&lt;</span>body<span>&gt;</span></p>
+			<p><span>&lt;</span>div id="container"><span>&lt;</span>/div<span>&gt;</span></p>
+			<p><span>&lt;</span>script type="text/javascript"<span>&gt;</span></p>
+			<p>var map = new BMap.Map("container");          // 创建地图实例</p>
+			<p>var point = new BMap.Point(121.480884,31.236521);  // 创建点坐标</p>
+			<p>map.centerAndZoom(point, 15);            //初始化地图，设置中心点坐标和地图级别  </p>
+			<p><span>&lt;</span>/script<span>&gt;</span></p>
+			<p><span>&lt;</span>/body<span>&gt;</span> </p>
+			<p><span>&lt;</span>/html<span>&gt;</span></p>
+		</div>
+	</div>
+	<!-- 步骤详解 -->
+	<p class="con-title">步骤详解</p>
+	<div class="con-inner">
+		<p>
+			<b>文档声明：</b>
+			根据HTML标准，每一份HTML文档都应该声明正确的文档类型，我们建议您使用最新的符合HTML5规范的文档声明： 
+		</p>
+		<div class="code">
+			<p><span>&lt;</span>!DOCTYPE html<span>&gt;</span></p>
+		</div>
+		<p>
+			<b>移动端的meta标签：</b>
+			添加一个meta标签，以便使您的页面更好的在移动平台上展示。
+		</p>
+		<div class="code">
+			<p>
+				<span>&lt;</span>meta name="viewport" content="initial-scale=1.0, user-scalable=no" /<span>&gt;</span>
+			</p>
+		</div>
+		<p><b>页面样式设置：</b></p>
+		<div class="code">
+			<p><span>&lt;</span>style type="text/css"<span>&gt;</span></p> 
+			<p>html{height:100%}</p>
+			<p>body{height:100%;margin:0px;padding:0px}</p>
+			<p>#container{height:100%}</p>
+			<p><span>&lt;</span>/style<span>&gt;</span></p>
+		</div>
+		<p>
+			<b>创建地图实例：</b>
+			创建地图容器元素 地图需要一个HTML元素作为容器，这样才能展现到页面上。这里我们创建了一个div元素。命名空间 API使用BMap作为命名空间，所有类均在该命名空间之下，比如：BMap.Map、BMap.Control、BMap.Overlay。 
+		</p>
+		<p>位于BMap命名空间下的Map类表示地图，通过new操作符可以创建一个地图实例。其参数可以是元素id也可以是元素对象</p>
+		<div class="code">
+			<p>var map = new BMap.Map("container");</p>
+		</div>
+		<p>
+			<b>创建点坐标：</b>
+			这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中121.480884表示经度，31.236521表示纬度。 
+		</p>
+		<div class="code">
+			<p>var point = new BMap.Point(121.480884,31.236521);</p>
+		</div>
+		<p>
+			<b>地图初始化：</b>
+			在创建地图实例后，我们需要对其进行初始化，BMap.Map.centerAndZoom()方法要求设置中心点坐标和地图级别。地图必须经过初始化才可以执行其他操作。 
+		</p>
+		<div class="code">
+			<p>map.centerAndZoom(point, 15);</p>
+		</div>
+		<p>
+			<b>是否支持鼠标滚轮缩放操作：</b>
+			如果您希望在地图中使用鼠标滚轮控制缩放，则可以调用map.enableScrollWheelZoom方法来开启 
+		</p>
+		<div class="code">
+			<p>map.enableScrollWheelZoom(true);</p>
+		</div>
+	</div>
+	<!-- 配置与操作 -->
+	<p class="con-title">配置与操作</p>
+	<div class="con-inner">
+		<p class="text-indent">
+			地图被实例化并完成初始化以后，地图就绘制成功了，API中的地图对象的外观与行为与百度地图网站上交互的地图非常相似。它支持鼠标拖拽、滚轮缩放、双击放大等交互功能。您也可以修改配置来改变这些功能。 比如，默认情况下地图不支持鼠标滚轮缩放操作，因为这样可能会影响整个页面的用户体验，但是如果您希望在地图中使用鼠标滚轮控制缩放，则可以调用map.enableScrollWheelZoom方法来开启。配置选项可以在Map类参考的配置方法一节中找到。此外，您还可以通过编程的方式与地图交互。Map类提供了若干修改地图状态的方法。例如：setCenter()、panTo()、zoomTo()等等。 
+		</p>
+	</div>
+	<!-- 异步加载地图 -->
+	<p class="con-title">异步加载地图</p>
+	<div class="con-inner">
+		<p>
+			JavaScript API支持异步加载，您可以在引用脚本的时候添加callback参数，当脚本加载完成后callback函数会被立刻调用。
+		</p>
+	</div>
+	<!-- 绘制简单基本地图实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/Common/asyncMap.html" target="_blank">异步加载地图实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/commonMap.html" target="_blank">简单地图实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/satellite.html" target="_blank">地图默认显示卫星混合模式实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/setNameMap.html" target="_blank">根据城市名设置地图中心点实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/setMaxMinLevel.html" target="_blank">设置地图最大最小级别</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/moveNavigDrag.html" target="_blank">移动、缩放、拖拽地图实例</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/setView.html" target="_blank">设置地图显示范围</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/getView.html" target="_blank">获取地图显示范围</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/getDistance.html" target="_blank">获取地图上两点间的距离</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/closeDefault.html" target="_blank">关闭默认地图POI事件</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/Common/getlongitudeLatitude.html" target="_blank">点击地图获取经纬度</a>
+		</p>
+	</div>
+</div>
+<!-- Baidu基本地图 结束-->

@@ -1,0 +1,69 @@
+<!-- 驾车路线 开始 -->
+<!-- 模块大标题 -->
+<h1><span class="font28">驾车路线 </span> BaiduMap API</h1>
+<div class="content">
+	<p class="con-title">驾车路线</p>
+	<div class="con-inner">
+		<p>根据起点终点名称查询驾车路线：</p>
+		<div class="code">
+			<pre>
+	//设置驾车路线，可设置显示检索结果面板
+	var opts = {
+		renderOptions:{
+			map:map,
+			autoViewport:true,
+			panel:'r-result'
+		}
+	};
+	//创建驾车路线对象
+	var driving = new BMap.DrivingRoute(map,opts);
+	
+	//调用检索方法查询到驾车路线
+	driving.search('中山公园','大世界');
+			</pre>
+		</div>
+
+		<p>根据起点终点坐标查询驾车路线：</p>
+		<div class="code">
+			<pre>
+	//创建驾车路线对象
+	var driving = new BMap.DrivingRoute(map,opts);
+	
+	//调用检索方法查询到驾车路线
+	driving.search(pointA,pointB);
+			</pre>
+		</div>
+
+		<p></p>
+		
+	</div>
+	<!-- 驾车路线实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/startEndNameRoute.html" target="_blank">根据起点终点名称设置驾车路线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/startEndPointRoute.html" target="_blank">根据起点终点经纬度设置驾车路线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/withPanelRoute.html" target="_blank">带结果面板的驾车路线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/dragPointSetRoute.html" target="_blank">拖拽起点终点设置驾车路线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/wayPointsRoute.html" target="_blank">设置驾车路线途经点</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/selectBestRoute.html" target="_blank">选择最佳驾车路线</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/getDurationDistance.html" target="_blank">获取驾车路线的时间、距离</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/DrivingRoute/taxiPrice.html" target="_blank">计算打车费用</a>
+		</p>
+	</div>
+</div>
+<!-- 驾车路线 结束 -->

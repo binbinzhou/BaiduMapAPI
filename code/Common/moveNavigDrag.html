@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>移动、缩放、拖拽地图</title>
+	<link rel="stylesheet" href="../../css/basic.css">
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.moveDemo{ float: left; width: 600px; margin-right: 20px; }
+		.navigationDemo{ float: left;  width: 600px;}
+		.dragDemo{ float: left; width: 600px;}
+		.container{width:600px;height:400px;}
+	</style>
+</head>
+<body>
+	<!-- 移动实例 -->
+	<div class="moveDemo">
+		<div class="container" id="allmap1"></div>
+		<p>初始化地图，中心点为（121.480884,31.236521），缩放级别为15的上海市地图，点击按钮之后，通过改变中心点坐标，地图平移到广州</p>
+		<p><button class="btn btn-success" id="moveBtn">移动到广州</button></p>
+	</div>
+	<!-- 缩放实例 -->
+	<div class="navigationDemo">
+		<div class="container" id="allmap2"></div>
+		<p>初始化地图，中心点为（121.480884,31.236521），缩放级别为8的上海市地图，点击按钮之后，通过设置缩放级别将地图放大到14级</p>
+		<p><button class="btn btn-danger" id="navigaBtn">缩放地图级别</button></p>
+	</div>
+	<!-- 拖拽实例 -->
+	<div class="dragDemo">
+		<div class="container" id="allmap3"></div>
+		<p>初始化地图，默认开启拖拽，点击禁止拖拽之后不可拖拽</p>
+		<p>
+			<button class="btn btn-primary" id="dragBtn">开启拖拽</button>
+			<button class="btn btn-info" id="disableDragBtn">禁止拖拽</button>
+		</p>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+<script type="text/javascript">
+	// 百度地图API功能
+	//移动实例
+	function move(){
+		var map = new BMap.Map("allmap1");       
+		map.centerAndZoom(new BMap.Point(121.480884,31.236521),15);
+		var moveBtn = document.getElementById('moveBtn'); 
+		moveBtn.onclick  = function(){
+			map.panTo(new BMap.Point(113.262232,23.154345));   //点击之后移动到广州
+		}
+	}
+	move();
+	
+
+	//缩放实例
+	function naviga(){
+		var map = new BMap.Map("allmap2");       
+		map.centerAndZoom(new BMap.Point(121.480884,31.236521),10);
+		var navigaBtn = document.getElementById('navigaBtn'); 
+		navigaBtn.onclick  = function(){
+			map.setZoom(14);	//点击之后放大到14级
+		}
+	}
+	naviga();
+
+	//拖拽实例
+	function drag(){
+		var map = new BMap.Map("allmap3");       
+		map.centerAndZoom(new BMap.Point(121.480884,31.236521),15);
+		var dragBtn = document.getElementById('dragBtn'); 
+		var disableDragBtn = document.getElementById('disableDragBtn');
+		dragBtn.onclick  = function(){
+			//开启拖拽
+			map.enableDragging();
+			alert('您开启了拖拽效果');
+		}
+		disableDragBtn.onclick  = function(){
+			//禁止拖拽
+			map.disableDragging();
+			alert('您禁止了拖拽效果');
+		}
+
+
+	}
+	drag();
+	
+
+
+
+</script>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>输入关键字本地搜索</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:90%;}
+		input{margin-left: 20px;}
+		input,button{ padding: 8px; }
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		请输入要查询的地名：<input type="text" class="text" id="inputVal">
+		<button class="btn" id="searchBtn">搜索</button>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);	
+
+		var opts = {
+			renderOptions:{
+				map:map
+			}
+		};
+		var local = new BMap.LocalSearch(map,opts);
+		//输入关键字搜索
+		var inputVal = document.getElementById('inputVal');
+		var searchBtn = document.getElementById('searchBtn');
+		searchBtn.onclick = function(){
+			local.search(inputVal.value);
+		};
+
+	</script>

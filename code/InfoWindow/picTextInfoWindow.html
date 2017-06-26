@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加图文组合的信息窗口</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:800px;height:500px; border:1px solid #000;}
+		p{margin:5px; font-size:14px;}
+		.inner{
+			height: 200px;
+		}
+		.t-title{
+			font-size: 18px;
+			font-weight: bold;
+			color: #A7C0E0;
+		}
+		.img{
+			margin: 0 10px;
+			width: 100px;
+			height: 100px;
+			float: right;
+		}
+		.s-text{
+			width: 400px;
+			line-height: 20px;
+			font-size: 14px;
+			color: #949494;
+			text-indent: 2em;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+	<p>点击标注点，可查看由文本，图片构成的复杂型信息窗口</p>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+
+		//创建标注
+		var marker = new BMap.Marker(point);
+		//将标注添加到地图上
+		map.addOverlay(marker);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//创建信息窗口的代码块
+		var sContent = '<div class="inner"><h4 class="t-title">欢迎来到徐汇区</h4>'+
+		'<img class="img" src="../../img/pic.png" alt="" id="imgDemo" title="徐汇区"/>'+
+		'<p class="s-text">百度地图上负责与地图交互的UI元素称为控件。百度地图API中提供了丰富的控件，您还可以通过Control类来实现自定义控件。地图API中提供的控件有：Control：</p></div>';
+
+		//创建信息窗口对象
+		var infoWindow = new BMap.InfoWindow(sContent);
+
+		//给标注添加点击事件
+		marker.addEventListener('click',function(){
+			//开启信息窗口
+			this.openInfoWindow(infoWindow,point);
+		});
+
+		
+	</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>地址解析</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:65%;}
+		#r-result{width:100%; font-size:14px;line-height:20px;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+	<div id="r-result">
+		<button id="bdBtn">批量地址解析</button>
+		<div id="result"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script type="text/javascript">
+	// 百度地图API功能
+	// 创建Map实例
+	var map = new BMap.Map('allmap');    
+	// 初始化地图,设置中心点坐标和地图级别
+	map.centerAndZoom(new BMap.Point(117.269945,31.86713), 13);
+	//开启鼠标滚轮缩放          
+	map.enableScrollWheelZoom(true);
+	//创建地址解析器实例
+	var myGeo = new BMap.Geocoder();
+	var index = 0;
+	var addressPoints = [
+		'包河区金寨路1号（金寨路与望江西路交叉口）',
+		'庐阳区凤台路209号（凤台路与蒙城北路交叉口）',
+		'蜀山区金寨路217号(近安医附院公交车站)',
+		'蜀山区梅山路10号(近安徽饭店) ',
+		'蜀山区 长丰南路159号铜锣湾广场312室',
+		'合肥市寿春路93号钱柜星乐町KTV（逍遥津公园对面）',
+		'庐阳区长江中路177号',
+		'新站区胜利路89'];
+	function bdGEO(){
+		var addressPoint = addressPoints[index];
+		geocodeSearch(addressPoint);
+		index++;
+	}
+	function geocodeSearch(addressPoint){
+		if(index<addressPoints.length){
+			setTimeout(window.bdGEO,400);
+		}
+		myGeo.getPoint(addressPoint, function(point){
+			if (point) {
+				document.getElementById('result').innerHTML +=  index + '、' + addressPoint + ':' + point.lng + ',' + point.lat + '</br>';
+				var address = new BMap.Point(point.lng, point.lat);
+				var marker = new BMap.Marker(address);
+				var label = new BMap.Label(index+":"+addressPoint,{offset:new BMap.Size(20,-10)});
+				//添加标注
+				map.addOverlay(marker);
+				//往标注上添加文本标签
+				marker.setLabel(label);
+			}
+		}, '合肥市');
+	}
+	var bdBtn = document.getElementById('bdBtn');
+	bdBtn.onclick = function(){
+		bdGEO();
+	};
+</script>

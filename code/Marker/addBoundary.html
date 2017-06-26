@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加行政区规划</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:100%;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,12);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//获取行政区
+		function getBoundary(place){
+			var bdary = new BMap.Boundary();
+			bdary.get(place,function(rs){
+				//清除地图覆盖物
+				map.clearOverlays();
+				//行政区的点有多少个
+				var count = rs.boundaries.length;
+				if(count === 0){
+					alert('未能获取当前输入行政区域');
+					return ;
+				}
+				var pointArray = [];
+				for(var i=0;i<count;i++){
+					//建立多边形覆盖物
+					var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"});
+					//添加覆盖物
+					map.addOverlay(ply);
+					pointArray = pointArray.concat(ply.getPath());
+				}
+				//调整视野
+				map.setViewport(pointArray);
+			});
+		}
+		//2秒之后移动到行政区
+		setTimeout(function(){
+			getBoundary('上海市徐汇区');
+		}, 2000);
+	</script>

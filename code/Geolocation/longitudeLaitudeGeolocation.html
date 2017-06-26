@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>根据经纬度进行定位</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:80%;}
+		#r-result{width:100%; font-size:14px;}
+		#r-result>*{ height: 30px;}
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		<p>根据经纬度进行定位</p>
+		<div id="r-result">
+			经度: <input id="longitude" type="text" value="121.480884" />
+			纬度: <input id="latiude" type="text" value="31.236521" />
+			<button id="searchBtn">查询</button>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(116.404, 39.915);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,12);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//根据经纬度定位进行定位
+		function getLocation(){
+			var longitude = document.getElementById('longitude').value;
+			var latiude = document.getElementById('latiude').value;
+			if(longitude!=='' && latiude!==''){
+				map.clearOverlays();
+				var points = new BMap.Point(longitude,latiude);
+				var marker = new BMap.Marker(points);
+				map.addOverlay(marker);
+				map.panTo(points);
+			}
+		}
+		var searchBtn = document.getElementById('searchBtn');
+		searchBtn.onclick = function(){
+			getLocation();
+		};
+
+	</script>

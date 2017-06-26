@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加纯文本的信息窗口</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:600px;height:400px; border:1px solid #000;}
+		p{margin:5px; font-size:14px;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+	<p>点击标注点，可查看由纯文本构成的简单型信息窗口</p>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+
+		//创建标注
+		var marker = new BMap.Marker(point);
+		//将标注添加到地图上
+		map.addOverlay(marker);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//设置窗口的样式
+		var opts = {
+			width:200,
+			height:100,
+			title:'上海亚信分公司',
+			enableMessage:true,
+			message:'欢迎来到亚信'
+		};
+		//创建信息窗口对象
+		var infoWindow = new BMap.InfoWindow('地址：徐汇区漕河泾软件大厦56号楼12层B区',opts);
+		//给标注添加点击事件
+		marker.addEventListener('click',function(){
+			//开启信息窗口
+			map.openInfoWindow(infoWindow,point);
+		});
+
+		
+	</script>

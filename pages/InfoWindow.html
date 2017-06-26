@@ -1,0 +1,44 @@
+<!-- 信息窗口 开始 -->
+<!-- 模块大标题 -->
+<h1><span class="font28">信息窗口 </span> BaiduMap API</h1>
+<div class="content">
+	<!-- 信息窗口简介 -->
+	<p class="con-title">信息窗口</p>
+	<div class="con-inner">
+		<p class="text-indent">信息窗口在地图上方的浮动显示HTML内容。信息窗口可直接在地图上的任意位置打开，也可以在标注对象上打开（此时信息窗口的坐标与标注的坐标一致）。 您可以使用InfoWindow来创建一个信息窗实例，注意同一时刻地图上只能有一个信息窗口处于打开状态。 </p>
+		<p>在标注上绘制信息窗口情况：当不使用信息窗口本身自带的样式以及头部时的位置不会发生偏移，也就是说当用html片段自定义填充信息窗口的内容时打开位置是正确的。信息窗口打开的位置在标注的上方，使用信息窗口本身自带的样式以及头部时，信息窗口发生偏移，信息窗口打开位置在标注的下方。</p>
+		<div class="code">
+			<pre>
+	//设置窗口的样式
+	var opts = {
+		width:200,
+		height:100,
+		title:'上海亚信分公司',
+		enableMessage:true,
+		message:'欢迎来到亚信'
+	};
+	//创建信息窗口对象
+	var infoWindow = new BMap.InfoWindow('地址：徐汇区漕河泾软件大厦56号楼12层B区',opts);
+	//给标注添加点击事件
+	marker.addEventListener('click',function(){
+		//开启信息窗口
+		map.openInfoWindow(infoWindow,point);
+	});
+			</pre>
+		</div>
+	</div>
+	<!-- 信息窗口实例Demo -->
+	<p class="con-title">实例Demo</p>
+	<div class="con-inner">
+		<p>
+			<a class="demo-color" href="code/InfoWindow/textInfoWindow.html" target="_blank">添加纯文本的信息窗口</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/InfoWindow/picTextInfoWindow.html" target="_blank">添加图文组合的信息窗口</a>
+		</p>
+		<p>
+			<a class="demo-color" href="code/InfoWindow/manyInfoWindow.html" target="_blank">添加多个信息窗口</a>
+		</p>
+	</div>
+</div>
+<!-- 信息窗口 结束 -->

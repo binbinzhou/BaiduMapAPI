@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>设置终点不明确的公交路线</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width:100%;height:60%;}
+		#r-result{ display: none; }
+	</style>
+</head>
+<body>
+		<div class="container" id="allmap"></div>
+		<p>设置终点不明确的公交路线</p>
+		<div id="routePanel">
+			<p style="margin-right:10px;">起点：<span>魏公村</span></p>
+			<p>终点：<span id="B_PointName1">银行</span>
+		</div>
+		<div id="r-result"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+		//创建点坐标
+		var point = new BMap.Point(121.402801,31.150351);
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,13);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		var start = '中山公园';
+		var end = '银行';
+		var panelResult = document.getElementById('r-result');
+		var opts = {
+			renderOptions:{
+				map:map,
+				panel:'r-result'
+			},
+			onResultsHtmlSet:function(){
+				panelResult.style.display = 'block';
+			}
+		};
+		//创建公交路线
+		var transit = new BMap.TransitRoute(map,opts);
+		transit.search(start,end);
+
+	</script>

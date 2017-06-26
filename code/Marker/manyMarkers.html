@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<title>添加多个标注并获取对应的点的经纬度</title>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		.container{width: 100%;height: 100%;}
+	</style>
+</head>
+<body>
+	<div class="container" id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nFDL3WSCCQpVBLlCWGyaxHGddTe8q94q"></script>
+	<script>
+		//创建地图实例
+		var map = new BMap.Map("allmap");
+
+		//创建点坐标
+		var point = new BMap.Point(121.480884,31.236521);
+
+		//初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point,15);
+		//开启鼠标滚轮缩放
+		map.enableScrollWheelZoom(true);
+
+		//创建数组存放标注的经纬度点
+		var pointArr = [[121.483615,31.238775],[121.468882,31.234514],[121.479878,31.228647],[121.491089,31.237108]];
+		var arr = [];
+		for(var i=0;i<pointArr.length;i++){
+			arr[i] = new BMap.Point(pointArr[i][0],pointArr[i][1]);
+			//添加自定义图标标注
+			var myIcon = new BMap.Icon('../../img/mark.png',new BMap.Size(40,70));
+			//创建标注
+			var marker = new BMap.Marker(arr[i],{icon:myIcon});
+			//将标注添加到地图上
+			map.addOverlay(marker);
+			//调用绑定的事件
+			getPosi();
+		}
+
+		function getPosi(){
+			//给标注添加点击事件
+			marker.addEventListener('click',function(event){
+				//var posi = this.getPosition();
+				var posi = event.target.getPosition();
+				alert('marker的位置是：'+posi.lng+','+posi.lat);
+			});
+		}
+
+		
+
+		
+	</script>

@@ -1,0 +1,104 @@
+<!-- JavaScript API简介开始 -->
+<!-- 简介固定定位导航条 -->
+<div class="fixed-nav">
+	<div class="nav-a">
+		<a class="active" href="javascript:void(0);">API功能介绍</a>
+		<a href="javascript:void(0);">API服务方法</a>
+		<a href="javascript:void(0);">移动端开发</a>
+		<a href="javascript:void(0);">兼容性</a>
+	</div>
+</div>
+<!-- 模块大标题 -->
+<h1><span class="font28">简介 </span> BaiduMap API</h1>
+<!-- 模块主要内容 -->
+<div class="content">
+	<!-- JavaScript API功能介绍 -->
+	<p class="con-title">JavaScript API功能介绍</p>
+	<div class="con-inner">
+		<ul class="function">
+			<li>
+				<b>基本地图功能：</b>展示（支持2D图、3D图、卫星图）、平移、缩放、拖拽等
+			</li>
+			<li>
+				<b>地图控件展示功能：</b>可以在地图上添加/删除鹰眼、工具条、比例尺、自定义版权、地图类型及定位控件，并可以设置各类控件的显示位置。
+			</li>
+			<li>
+				<b>覆盖物功能：</b>支持在地图上添加/删除点、线、面、热区、行政区划、用户自定义覆盖物等；开源库提供富标注、标注管理器、聚合marker、自定义覆盖物等功能。 
+			</li>
+			<li>
+				<b>工具类功能：</b>提供经纬度坐标与屏幕坐标互转功能；开源库里提供测距、几何运算及GPS坐标/国测局坐标转百度坐标等功能。  
+			</li>
+			<li>
+				<b>定位功能：</b>支持IP定位及浏览器（支持html5特性浏览器）定位功能。  
+			</li>
+			<li>
+				<b>右键菜单功能：</b>支持在地图上添加右键菜单。 
+			</li>
+			<li>
+				<b>鼠标交互功能：</b>支持动态修改鼠标样式、鼠标拖拽/缩放地图及鼠标绘制等功能。。 
+			</li>
+			<li>
+				<b>图层功能：</b>支持重设地图底图、地图上叠加实时交通图层或自定义图层功能。 
+			</li>
+			<li>
+				<b>本地搜索功能：</b>包括根据城市、矩形范围、圆形范围等条件进行POI搜索；且支持用户自有数据的检索。 
+			</li>
+			<li>
+				<b>公交检索：</b>支持起始点坐标、起始点名称、LocalSearchPoi实例三种检索条件的检索；检索结果支持便捷、可换乘、少步行、不乘地铁四种方案。
+			</li>
+			<li>
+				<b>驾车检索：</b>支持起始点坐标、起始点名称、LocalSearchPoi实例三种检索条件的检索；返回最短时间、最短距离、避开高速的驾车导航结果；且提供计算打车费用服务。 
+			</li>
+			<li>
+				<b>步行导航：</b>提供步行导航方案。  
+			</li>
+			<li>
+				<b>逆/地理编码：</b>支持百度坐标与地址描述信息之间的转换服务。 
+			</li>
+			<li>
+				<b>个性化数据展示功能：</b>用户自有数据存储到LBS.云后，JavaScript API可以提供以麻点图形式展示自有数据功能。 
+			</li>
+		</ul>
+	</div>
+	<!-- 申请AK密钥 -->
+	<p class="con-title">获取JavaScript API服务方法</p>
+	<div class="con-inner">
+		<p><b>申请API ak：</b>为了统一平台服务的配额管理，JavaScript API在新版本引入ak机制。JavaScript API v1.4及以前版本无须申请密钥（ak），自v1.5版本开始需要先申请密钥（ak），才可使用。申请密钥：http://lbsyun.baidu.com/apiconsole/key?application=key。</p>
+		<p><b>引用API：</b>自JS APIv1.5之后，最新版本为2.0，您需要首先申请密钥（ak），才可成功加载API JS文件。ak的使用方法如下：</p>
+		<div class="code">
+			<p>
+				<span>&lt;</span><span>script</span> src="http://api.map.baidu.com/api?v=2.0<span>&amp;</span>ak=您的密钥" type="text/javascript"&gt;</script>
+			</p>
+		</div>
+		<p>
+			其中参数v为API当前的版本号，目前最新版本为2.0。在1.2版本之前您还可以设置services参数，以告知API是否加载服务部分，true表示加载，false表示不加载，默认为true。
+		</p>
+	</div>
+	<!-- 移动端的地图应用 -->
+	<p class="con-title">移动端的地图应用</p>
+	<div class="con-inner">
+		<p>
+			API自1.1版本起开始支持iPhone、Android这样的移动平台。用户通过手机浏览器就可以访问由地图API创建出来的应用。移动平台的屏幕尺寸通常比PC或笔记本要小，操作方式也有所不同。为了更好的在手机浏览器上展示地图，我们有如下建议：
+		</p>
+		<p>
+			将地图容器高设置为100%，使其充满整个屏幕，或者您也可以计算浏览器窗口的大小并进行设置。
+		</p>
+		<p>
+			添加下面的meta标签：<span>&lt;</span> meta name="viewport" content="initial-scale=1.0, user-scalable=no" /<span>&gt;</span>这样做是为了让页面以正常比例进行显示并且禁止用户缩放页面的操作。 
+		</p>
+	</div>
+	<!-- 兼容性问题 -->
+	<p class="con-title">兼容性问题</p>
+	<div class="con-inner">
+		<p>
+			浏览器：IE 6.0+、Firefox 3.6+、Opera 9.0+、Safari 3.0+、Chrome 
+		</p>
+		<p>
+			操作系统：Windows、Mac、Linux 
+		</p>
+		<p>
+			移动平台：iPhone、Android  
+		</p>
+	</div>
+</div>
+<!-- JavaScript API简介结束 -->
